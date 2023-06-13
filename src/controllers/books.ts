@@ -45,14 +45,14 @@ export const getBook: RequestHandler = async (req, res, next) => {
   }
 }
 
-interface CreateBookBody {
+interface SaveBookBody {
   author: string,
   description: string
   image: string;
   title: string,
 }
 
-export const saveBook: RequestHandler<unknown, unknown, CreateBookBody, unknown> = async (req, res, next) => {
+export const saveBook: RequestHandler<unknown, unknown, SaveBookBody, unknown> = async (req, res, next) => {
   const { author, description, image, title } = req.body
   /* @ts-ignore */
   const { userId: authenticatedUserId } = req.session
@@ -82,15 +82,10 @@ export const saveBook: RequestHandler<unknown, unknown, CreateBookBody, unknown>
 }
 
 interface UpdateBookParams {
-    bookId: string,
+  bookId: string,
 }
 
-interface UpdateBookBody {
-  description?: string,
-  title?: string,
-}
-
-export const updateBook: RequestHandler<UpdateBookParams, unknown, UpdateBookBody, unknown> = async (req, res, next) => {
+export const updateBook: RequestHandler<UpdateBookParams, unknown, Partial<SaveBookBody>, unknown> = async (req, res, next) => {
   const { bookId } = req.params
   const updatedBook = req.body
   /* @ts-ignore */
@@ -100,7 +95,7 @@ export const updateBook: RequestHandler<UpdateBookParams, unknown, UpdateBookBod
     isNonNullable(authenticatedUserId)
 
     if (updatedBook === undefined) {
-      throw createHttpError(400, 'Book must have a title or description')
+      throw createHttpError(400, 'Book is empty')
     }
 
     const updatedBooks = books.map(book => book.id === bookId

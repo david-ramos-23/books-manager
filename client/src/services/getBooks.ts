@@ -7,7 +7,7 @@ export const getBooks = async (): Promise<BookType[]> => {
     },
   }).then(async (res) => {
     if (!res.ok) {
-      throw Error(`Error HTTP: ${res.status}`, { cause: res.status })
+      throw Error(`Error HTTP: ${res.status}`, { cause: res.statusText })
     }
 
     return await res.json()
