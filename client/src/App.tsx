@@ -1,16 +1,18 @@
-import { useEffect } from "react"
+import type { ReactElement } from 'react'
+import { Suspense } from 'react'
+import { BrowserRouter } from 'react-router-dom'
+import { LoadingOrError } from './components/LoadingOrError'
+import { Pages } from './routes/Pages/Pages'
 
-function App() {
+export function App(): ReactElement {
+  const imgUrl = import.meta.env.VITE_LOGO_URL
 
-  useEffect(() => {
-    fetch('/api/users/login', {
-      method: 'POST',
-    }).then((res) => res.json()).then((data) => {
-      console.log(data)
-    })  
-  }, [])
-  
-	return <div>App</div>
+  return (
+    <BrowserRouter>
+      <Suspense fallback={<LoadingOrError />}>
+        <img src={imgUrl} />
+        <Pages />
+      </Suspense>
+    </BrowserRouter>
+  )
 }
-
-export default App

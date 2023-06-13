@@ -11,7 +11,8 @@
     "build:back": "tsc",
     "build:front": "npm run build --prefix client",
     "build:prod": "npm run build:back && npm run build:front",
-    "clean": "rm -rf dist && rm -rf client/dist && rm -rf data"
+    "clean": "rm -rf dist && rm -rf client/dist && rm -rf data",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
@@ -43,6 +44,9 @@
     "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
     "eslint-plugin-promise": "^6.0.0",
     "http-errors": "^2.0.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.2",
+    "nodemon": "^2.0.22",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.1.3"
   }
