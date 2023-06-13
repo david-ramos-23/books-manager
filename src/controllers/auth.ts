@@ -73,7 +73,7 @@ export const login: RequestHandler<unknown, unknown, LoginSchemaType, unknown> =
     const user = users.find((user) => user.email === email)
 
     if (!user) {
-      throw createHttpError(401, 'Invalid email address')
+      throw createHttpError(404, 'User not found')
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password)

@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useEffect } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { loginSchema } from '../../../src/schemas/auth'
+import { loginSchemaForm } from '../../../src/schemas/auth'
 import { useAuth } from '@/context/auth'
 import { Card } from '@/components/Card'
 import { Message } from '@/components/Message'
@@ -16,7 +16,7 @@ export function SignIn() {
     handleSubmit,
     formState: { errors },
   } = useForm<SignInFormValues>({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(loginSchemaForm),
   })
   const { signIn, errors: loginErrors, isAuthenticated } = useAuth()
   const navigate = useNavigate()
