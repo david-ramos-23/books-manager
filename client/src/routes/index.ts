@@ -19,8 +19,8 @@ const routes: Routes = {
           default: module.AddOrEditBook,
         }))
     ),
-    path: '/',
-    title: 'Welcome',
+    path: '/add',
+    title: 'Add Book',
   },
   [Pages.EditBook]: {
     component: lazy(
@@ -29,8 +29,8 @@ const routes: Routes = {
           default: module.AddOrEditBook,
         }))
     ),
-    path: '/',
-    title: 'Welcome',
+    path: '/edit/:id',
+    title: 'Edit Book',
   },
 }
 
