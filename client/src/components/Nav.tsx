@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
 export const Nav = () => {
-  const imgUrl = import.meta.env.VITE_LOGO_URL
+  const imgUrl = import.meta.env.VITE_LOGO_URL ?? 'cardohealth.webp'
 
   return (
     <header className='sticky top-0 z-[1] mb-16 w-full bg-[#5D5E3Faa] p-2 font-medium backdrop-blur-sm sm:px-10'>
