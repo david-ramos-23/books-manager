@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setUser(undefined)
       setIsAuthenticated(false)
     } catch (error) {
-      console.error(error.response.data.message)
+      console.error(error)
     }
   }
 

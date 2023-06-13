@@ -11,7 +11,7 @@ interface BookContextInterface {
   books: BookType[]
   getAllBooks: () => void
   deleteBook: (id: string) => void
-  saveBook: (book: BookType) => BookType
+  saveBook: (book: BookType) => void
   updateBook: (id: string, book: BookType) => void
 }
 
@@ -43,7 +43,8 @@ export function BookProvider({ children }: { children: ReactNode }) {
 
   const saveBook = async (book: BookType) => {
     try {
-      return await saveBookRequest(book)
+      const savedBook = await saveBookRequest(book)
+      console.log(savedBook)
     } catch (error) {
       console.error(error)
     }

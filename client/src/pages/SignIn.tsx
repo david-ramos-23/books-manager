@@ -1,27 +1,27 @@
-import { Link, useNavigate } from 'react-router-dom'
-import { useForm } from 'react-hook-form'
-import { useEffect } from 'react'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { loginSchemaForm } from '../../../src/schemas/auth'
-import { useAuth } from '@/context/auth'
-import { Card } from '@/components/Card'
-import { Message } from '@/components/Message'
-import { Label } from '@/components/Label'
 import { Button } from '@/components'
-import { SignInFormValues } from '@/types'
+import { Card } from '@/components/Card'
+import { Label } from '@/components/Label'
+import { Message } from '@/components/Message'
+import { useAuth } from '@/context/auth'
+import { SignInFormValuesType } from '@/types'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import { Link, useNavigate } from 'react-router-dom'
+import { loginSchemaForm } from '../../../src/schemas/auth'
 
 export function SignIn() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignInFormValues>({
+  } = useForm<SignInFormValuesType>({
     resolver: zodResolver(loginSchemaForm),
   })
   const { signIn, errors: loginErrors, isAuthenticated } = useAuth()
   const navigate = useNavigate()
 
-  const onSubmit = (data: SignInFormValues) => signIn(data)
+  const onSubmit = (data: SignInFormValuesType) => signIn(data)
 
   useEffect(() => {
     if (isAuthenticated) {
