@@ -52,6 +52,16 @@ const routes: Routes = {
     path: '/edit/:id',
     title: 'Edit Book',
   },
+  [Pages.NotFound]: {
+    component: lazy(
+      async () =>
+        await import('@/pages/NotFound').then((module) => ({
+          default: module.NotFound,
+        }))
+    ),
+    path: '/*',
+    title: 'Not found',
+  },
 }
 
 export default routes

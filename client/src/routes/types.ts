@@ -7,6 +7,7 @@ enum Pages {
   SignIn,
   AddBook,
   EditBook,
+  NotFound,
 }
 
 interface PathRouteCustomProps {
