@@ -14,7 +14,7 @@ export function App(): ReactElement {
           <BrowserRouter>
             <Nav />
             <main className='relative mx-auto flex max-w-7xl flex-col items-center justify-center pb-32'>
-              <section className='w-full'>
+              <section className='flex w-full flex-col items-center justify-center'>
                 <header>
                   <h1 className='sm:text3xl mt-5 text-center text-4xl font-extrabold leading-[1.15] text-black'>
                     Cardo Health
