@@ -3,6 +3,8 @@ import { PathRouteProps } from 'react-router-dom'
 
 enum Pages {
   Home,
+  SignUp,
+  SignIn,
   AddBook,
   EditBook,
 }

@@ -17,33 +17,31 @@ export async function signUp({
   email,
   password,
 }: SignUpRequest): Promise<UserType> {
-  const response = await fetchData('/api/users/signup', {
+  return await fetchData('/api/users/signup', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ username, email, password }),
   })
-  return response.json()
 }
 
 export interface LoginRequest {
-  username: string
+  email: string
   password: string
 }
 
 export async function login({
-  username,
+  email,
   password,
 }: LoginRequest): Promise<UserType> {
-  const response = await fetchData('/api/users/login', {
+  return await fetchData('/api/users/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({ email, password }),
   })
-  return response.json()
 }
 
 export async function logout() {

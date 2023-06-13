@@ -1,7 +1,7 @@
 import type { BookType } from '../../../src/models/book'
 import { fetchData } from './utils'
 
-export async function fetchNotes(): Promise<BookType[]> {
+export async function getBooks(): Promise<BookType[]> {
   const response = await fetchData('/api/books', { method: 'GET' })
   return response.json()
 }
@@ -48,6 +48,6 @@ export async function updateBook({
   return response.json()
 }
 
-export async function deleteNote(bookId: string) {
+export async function deleteBook(bookId: string) {
   await fetchData(`/api/books/${bookId}`, { method: 'DELETE' })
 }

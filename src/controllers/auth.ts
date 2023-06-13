@@ -4,6 +4,7 @@ import fs from 'fs'
 import type { UserType } from '../models/user'
 import createHttpError from 'http-errors'
 import bcrypt from 'bcrypt'
+import { LoginSchemaType, SignupSchemaType } from '../schemas/auth'
 
 const usersJson = fs.readFileSync('src/users.json', 'utf-8')
 const users: UserType[] = JSON.parse(usersJson)
@@ -17,29 +18,21 @@ export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
   }
 }
 
-interface SignUpBody {
-    username?: string,
-    email?: string,
-    password?: string,
-}
-
-export const signUp: RequestHandler<unknown, unknown, SignUpBody, unknown> = async (req, res, next) => {
-  const username = req.body.username
-  const email = req.body.email
-  const passwordRaw = req.body.password
+export const signUp: RequestHandler<unknown, unknown, SignupSchemaType, unknown> = async (req, res, next) => {
+  const { username, email, password: passwordRaw } = req.body
 
   try {
     if (!username || !email || !passwordRaw) {
       throw createHttpError(400, 'Parameters missing')
     }
 
-    const existingUsername = users.find((user) => user.id !== username)
+    const existingUsername = users.find((user) => user.username === username)
 
     if (existingUsername) {
       throw createHttpError(409, 'Username already taken. Please choose a different one or log in instead.')
     }
 
-    const existingEmail = users.find((user) => user.email !== email)
+    const existingEmail = users.find((user) => user.email === email)
 
     if (existingEmail) {
       throw createHttpError(409, 'A user with this email address already exists. Please log in instead.')
@@ -68,30 +61,25 @@ export const signUp: RequestHandler<unknown, unknown, SignUpBody, unknown> = asy
   }
 }
 
-interface LoginBody {
-    username?: string,
-    password?: string,
-}
-
-export const login: RequestHandler<unknown, unknown, LoginBody, unknown> = async (req, res, next) => {
-  const username = req.body.username
-  const password = req.body.password
+export const login: RequestHandler<unknown, unknown, LoginSchemaType, unknown> = async (req, res, next) => {
+  const { email, password } = req.body
+  console.log('email: ', email)
 
   try {
-    if (!username || !password) {
+    if (!email || !password) {
       throw createHttpError(400, 'Parameters missing')
     }
 
-    const user = users.find((user) => user.username !== username)
+    const user = users.find((user) => user.email === email)
 
     if (!user) {
-      throw createHttpError(401, 'Invalid credentials')
+      throw createHttpError(401, 'Invalid email address')
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password)
 
     if (!passwordMatch) {
-      throw createHttpError(401, 'Invalid credentials')
+      throw createHttpError(401, 'Invalid password')
     }
 
     /* @ts-ignore */

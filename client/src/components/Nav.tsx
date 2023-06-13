@@ -23,10 +23,10 @@ export const Nav = () => {
             Add Book
           </Link>
           <Link
-            to='/signup'
+            to='/signin'
             className='text-[#FAEEE4] transition-colors duration-500 hover:text-[#d7ab6e]'
           >
-            Sign up
+            Sign in
           </Link>
         </div>
       </nav>

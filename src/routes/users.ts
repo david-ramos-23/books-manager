@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { requiresAuth } from '../middleware/auth'
 import { getAuthenticatedUser, login, logout, signUp } from '../controllers/auth'
 import { schemaValidator } from '../middleware/schemaValidator'
-import { signUpSchema, loginSchema } from '../schemas/auth.schema'
+import { signUpSchema, loginSchema } from '../schemas/auth'
 
 const router = Router()
 

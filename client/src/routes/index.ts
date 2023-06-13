@@ -12,6 +12,26 @@ const routes: Routes = {
     path: '/',
     title: 'Welcome',
   },
+  [Pages.SignUp]: {
+    component: lazy(
+      async () =>
+        await import('@/pages/SignUp').then((module) => ({
+          default: module.SignUp,
+        }))
+    ),
+    path: '/signup',
+    title: 'User SignUp',
+  },
+  [Pages.SignIn]: {
+    component: lazy(
+      async () =>
+        await import('@/pages/SignIn').then((module) => ({
+          default: module.SignIn,
+        }))
+    ),
+    path: '/signin',
+    title: 'User Login',
+  },
   [Pages.AddBook]: {
     component: lazy(
       async () =>
