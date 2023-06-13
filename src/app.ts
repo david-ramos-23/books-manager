@@ -1,7 +1,6 @@
 import cors from 'cors'
 import express from 'express'
 import morgan from 'morgan'
-import { requiresAuth } from './middleware/auth'
 import booksRoutes from './routes/books'
 import userRoutes from './routes/users'
 // import session from 'express-session'
@@ -26,21 +25,21 @@ app.use(express.json())
 
 // Routes
 app.use('/api/users', userRoutes)
-app.use('/api/books', requiresAuth, booksRoutes)
+app.use('/api/books', booksRoutes)
 
-async function serveClient() {
-	const path = await import('path')
-	app.use(express.static('client/dist'))
+async function serveClient () {
+  const path = await import('path')
+  app.use(express.static('client/dist'))
 
-	app.get('*', (req, res) => {
-		console.log(path.resolve('client', 'dist', 'index.html'))
-		res.sendFile(path.resolve('client', 'dist', 'index.html'))
-	})
-	return path
+  app.get('*', (req, res) => {
+    console.log(path.resolve('client', 'dist', 'index.html'))
+    res.sendFile(path.resolve('client', 'dist', 'index.html'))
+  })
+  return path
 }
 
 if (process.env.NODE_ENV === 'production') {
-	serveClient()
+  serveClient()
 }
 
 export default app
