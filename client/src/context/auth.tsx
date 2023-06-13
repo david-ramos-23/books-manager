@@ -1,18 +1,18 @@
+import { login, logout, signUp as signUpRequest } from '@/services/auth'
+import { SignInFormValuesType, SignUpFormValuesType } from '@/types'
 import {
-  useEffect,
+  ReactNode,
   createContext,
   useContext,
+  useEffect,
   useState,
-  ReactNode,
 } from 'react'
 import { UserType } from '../../../src/models/user'
-import { login, logout, signUp as signUpRequest } from '@/services/auth'
-import { SignInFormValues } from '@/types'
 
 interface AuthContextInterface {
   user: UserType | undefined
-  signUp: (user: UserType) => void
-  signIn: (user: SignInFormValues) => void
+  signUp: (user: SignUpFormValuesType) => void
+  signIn: (user: SignInFormValuesType) => void
   signOut: () => void
   isAuthenticated: boolean
   errors: string[]
@@ -32,7 +32,6 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<UserType>()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  console.log('isAuthenticated: ', isAuthenticated)
   const [errors, setErrors] = useState([])
   const [loading] = useState(true)
 
@@ -46,29 +45,25 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [errors])
 
-  const signUp = async (user: UserType) => {
+  const signUp = async (user: SignUpFormValuesType) => {
     try {
       const savedUser = await signUpRequest(user)
 
       setUser(savedUser)
-      console.log('savedUser: ', savedUser)
       setIsAuthenticated(true)
-      console.log('setIsAuthenticated')
     } catch (error) {
-      console.log(error)
+      console.error(error)
       // setErrors(error.response.data.message)
     }
   }
 
-  const signIn = async (user: SignInFormValues) => {
-    console.log('user: ', user)
+  const signIn = async (user: SignInFormValuesType) => {
     try {
       const currentUser = await login(user)
-      console.log('currentUser: ', currentUser)
       setUser(currentUser)
       setIsAuthenticated(true)
     } catch (error) {
-      console.log(error)
+      console.error(error)
       // setErrors(error.response.data.message)
     }
   }
@@ -79,8 +74,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setUser(undefined)
       setIsAuthenticated(false)
     } catch (error) {
-      console.log(error)
-      // setErrors(error.response.data.message)
+      console.error(error.response.data.message)
     }
   }
 
