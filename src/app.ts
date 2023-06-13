@@ -2,9 +2,9 @@ import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
 import userRoutes from './routes/users'
-import booksRoutes from './routes/books'
+// import booksRoutes from './routes/books'
 // import session from 'express-session'
-import { requiresAuth } from './middleware/auth'
+// import { requiresAuth } from './middleware/auth'
 
 const app = express()
 
@@ -24,7 +24,7 @@ app.use(express.json())
 
 // Routes
 app.use('/api/users', userRoutes)
-app.use('/api/books', requiresAuth, booksRoutes)
+// app.use('/api/books', requiresAuth, booksRoutes)
 
 async function serveClient () {
   const path = await import('path')
