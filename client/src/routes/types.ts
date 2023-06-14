@@ -1,13 +1,27 @@
 import { FC } from 'react'
 import { PathRouteProps } from 'react-router-dom'
 
-enum Pages {
-  Home,
-  SignUp,
-  SignIn,
-  AddBook,
-  EditBook,
-  NotFound,
+export enum UnprotectedPages {
+  Home = 'Home',
+  SignUp = 'SignUp',
+  SignIn = 'SignIn',
+  NotFound = 'NotFound',
+}
+
+export enum ProtectedPages {
+  Books = 'Books',
+  AddBook = 'AddBook',
+  EditBook = 'EditBook',
+}
+
+export const ROUTES = {
+  [UnprotectedPages.Home]: '/',
+  [ProtectedPages.Books]: '/books',
+  [UnprotectedPages.SignUp]: '/signup',
+  [UnprotectedPages.SignIn]: '/signin',
+  [ProtectedPages.AddBook]: '/add',
+  [ProtectedPages.EditBook]: '/edit/:id',
+  [UnprotectedPages.NotFound]: '*',
 }
 
 interface PathRouteCustomProps {
@@ -15,7 +29,10 @@ interface PathRouteCustomProps {
   component: FC
 }
 
-type Routes = Record<Pages, PathRouteProps & PathRouteCustomProps>
+type Routes = Record<UnprotectedPages, PathRouteProps & PathRouteCustomProps>
+type ProtectedRutes = Record<
+  ProtectedPages,
+  PathRouteProps & PathRouteCustomProps
+>
 
-export { Pages }
-export type { Routes }
+export type { Routes, ProtectedRutes }

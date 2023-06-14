@@ -1,8 +1,9 @@
 import { Button } from '@/components'
-import { Card } from '@/components/Card'
+import { CardForm } from '@/components/CardForm'
 import { Label } from '@/components/Label'
 import { Message } from '@/components/Message'
 import { useAuth } from '@/context/auth'
+import { ROUTES } from '@/routes/types'
 import { SignInFormValuesType } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect } from 'react'
@@ -25,12 +26,12 @@ export function SignIn() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/')
+      navigate(ROUTES.Books)
     }
   }, [isAuthenticated])
 
   return (
-    <Card>
+    <CardForm>
       {loginErrors.map((error, i) => (
         <Message
           message={error}
@@ -39,7 +40,6 @@ export function SignIn() {
         />
       ))}
       <h2 className='mg-5 text-xl font-bold'>Login</h2>
-
       <form className='flex w-full flex-col' onSubmit={handleSubmit(onSubmit)}>
         <div className='py-2'>
           <Label htmlFor='email'>Email</Label>
@@ -50,11 +50,10 @@ export function SignIn() {
             type='email'
             {...register('email', { required: true })}
           />
-
           {errors?.email?.message != null && (
             <Message
               message={errors?.email?.message}
-              className='mt-1 rounded-[3px] bg-red-200  p-1 text-xs text-red-400'
+              className='text-xs italic text-red-500'
             />
           )}
         </div>
@@ -69,7 +68,7 @@ export function SignIn() {
           {errors?.password?.message != null && (
             <Message
               message={errors?.password?.message}
-              className='mt-1 rounded-[3px] bg-red-200  p-1 text-xs text-red-400'
+              className='text-xs italic text-red-500'
             />
           )}
         </div>
@@ -80,13 +79,12 @@ export function SignIn() {
           Login
         </Button>
       </form>
-
       <p className='flex justify-between gap-x-2 text-sm'>
         Don't have an account?{' '}
         <Link to='/signup' className='text-sky-500'>
           Sign up
         </Link>
       </p>
-    </Card>
+    </CardForm>
   )
 }

@@ -1,8 +1,13 @@
 import { lazy } from 'react'
-import { Pages, Routes } from './types'
+import {
+  ProtectedPages,
+  ProtectedRutes,
+  Routes,
+  UnprotectedPages,
+} from './types'
 
-const routes: Routes = {
-  [Pages.Home]: {
+export const routes: Routes = {
+  [UnprotectedPages.Home]: {
     component: lazy(
       async () =>
         await import('@/pages/Home').then((module) => ({
@@ -12,7 +17,7 @@ const routes: Routes = {
     path: '/',
     title: 'Welcome',
   },
-  [Pages.SignUp]: {
+  [UnprotectedPages.SignUp]: {
     component: lazy(
       async () =>
         await import('@/pages/SignUp').then((module) => ({
@@ -22,7 +27,7 @@ const routes: Routes = {
     path: '/signup',
     title: 'User SignUp',
   },
-  [Pages.SignIn]: {
+  [UnprotectedPages.SignIn]: {
     component: lazy(
       async () =>
         await import('@/pages/SignIn').then((module) => ({
@@ -32,27 +37,7 @@ const routes: Routes = {
     path: '/signin',
     title: 'User Login',
   },
-  [Pages.AddBook]: {
-    component: lazy(
-      async () =>
-        await import('@/pages/AddOrEditBook').then((module) => ({
-          default: module.AddOrEditBook,
-        }))
-    ),
-    path: '/add',
-    title: 'Add Book',
-  },
-  [Pages.EditBook]: {
-    component: lazy(
-      async () =>
-        await import('@/pages/AddOrEditBook').then((module) => ({
-          default: module.AddOrEditBook,
-        }))
-    ),
-    path: '/edit/:id',
-    title: 'Edit Book',
-  },
-  [Pages.NotFound]: {
+  [UnprotectedPages.NotFound]: {
     component: lazy(
       async () =>
         await import('@/pages/NotFound').then((module) => ({
@@ -64,4 +49,35 @@ const routes: Routes = {
   },
 }
 
-export default routes
+export const protectedRoutes: ProtectedRutes = {
+  [ProtectedPages.Books]: {
+    component: lazy(
+      async () =>
+        await import('@/pages/Books').then((module) => ({
+          default: module.Books,
+        }))
+    ),
+    path: '/books',
+    title: 'Book list',
+  },
+  [ProtectedPages.AddBook]: {
+    component: lazy(
+      async () =>
+        await import('@/pages/BookForm').then((module) => ({
+          default: module.BookForm,
+        }))
+    ),
+    path: '/add',
+    title: 'Add Book',
+  },
+  [ProtectedPages.EditBook]: {
+    component: lazy(
+      async () =>
+        await import('@/pages/BookForm').then((module) => ({
+          default: module.BookForm,
+        }))
+    ),
+    path: '/edit/:id',
+    title: 'Edit Book',
+  },
+}

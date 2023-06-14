@@ -1,14 +1,15 @@
 import { Button } from '@/components'
-import { Card } from '@/components/Card'
 import { Label } from '@/components/Label'
 import { Message } from '@/components/Message'
 import { useAuth } from '@/context/auth'
+import { ROUTES } from '@/routes/types'
 import { SignUpFormValuesType } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { signUpSchemaForm } from '../../../src/schemas/auth'
+import { CardForm } from '@/components/CardForm'
 
 export function SignUp() {
   const {
@@ -25,12 +26,12 @@ export function SignUp() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/')
+      navigate(ROUTES.Books)
     }
   }, [isAuthenticated])
 
   return (
-    <Card>
+    <CardForm>
       {loginErrors.map((error, i) => (
         <Message
           message={error}
@@ -104,6 +105,6 @@ export function SignUp() {
           Sign in
         </Link>
       </p>
-    </Card>
+    </CardForm>
   )
 }
