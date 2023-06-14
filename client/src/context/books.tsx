@@ -1,4 +1,10 @@
-import { ReactNode, createContext, useContext, useState } from 'react'
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 import {
   getBooks,
   deleteBook as deleteBookRequest,
@@ -6,15 +12,22 @@ import {
   updateBook as updateBookRequest,
 } from '@/services/books'
 import { BookType } from '../../../src/models/book'
+import { BookFromValuesType } from '@/types'
+import { useAuth } from './auth'
 
-interface BookContextInterface {
+interface BookContextState {
   books: BookType[]
-  getAllBooks: () => void
-  deleteBook: (id: string) => void
-  saveBook: (book: BookType) => void
-  updateBook: (id: string, book: BookType) => void
+  error: null | Error
+  isLoading: boolean
+  isError: boolean
 }
 
+interface BookContextInterface extends BookContextState {
+  getAllBooks: () => void
+  deleteBook: (id: string) => void
+  saveBook: (book: BookFromValuesType) => void
+  updateBook: (id: string, book: BookFromValuesType) => void
+}
 const BookContext = createContext<BookContextInterface | null>(null)
 
 export const useBooks = () => {
@@ -25,47 +38,107 @@ export const useBooks = () => {
 }
 
 export function BookProvider({ children }: { children: ReactNode }) {
-  const [books, setBooks] = useState<BookType[]>([])
+  const [state, setState] = useState<BookContextState>({
+    books: [],
+    error: null,
+    isError: false,
+    isLoading: true,
+  })
+
+  const { isAuthenticated } = useAuth()
 
   const getAllBooks = async () => {
-    const books = await getBooks()
-    setBooks(books)
+    try {
+      const books = await getBooks()
+      setState({ books, error: null, isLoading: false, isError: false })
+    } catch (error) {
+      setState({
+        books: [],
+        error: error as Error,
+        isLoading: false,
+        isError: true,
+      })
+      console.error(error)
+    }
   }
 
   const deleteBook = async (bookId: string) => {
     try {
       await deleteBookRequest(bookId)
-      setBooks(books.filter((book) => book.id !== bookId))
+      const rest = state.books.filter((book) => book.id !== bookId)
+
+      setState({ books: rest, error: null, isLoading: false, isError: false })
     } catch (error) {
+      setState((currentState) => ({
+        books: [...currentState.books],
+        error: error as Error,
+        isLoading: false,
+        isError: true,
+      }))
       console.error(error)
     }
   }
 
-  const saveBook = async (book: BookType) => {
+  const saveBook = async (book: BookFromValuesType) => {
     try {
       const savedBook = await saveBookRequest(book)
-      console.log(savedBook)
+      setState((currentState) => {
+        const books = [...currentState.books, savedBook]
+        return {
+          books,
+          error: null,
+          isLoading: false,
+          isError: false,
+        }
+      })
     } catch (error) {
+      setState((currentState) => ({
+        books: [...currentState.books],
+        error: error as Error,
+        isLoading: false,
+        isError: true,
+      }))
       console.error(error)
     }
   }
 
-  const updateBook = async (bookId: string, book: BookType) => {
+  const updateBook = async (bookId: string, book: BookFromValuesType) => {
     try {
-      await updateBookRequest({ bookId, book })
+      const updatedBooks = await updateBookRequest({ bookId, book })
+      setState((currentState) => ({
+        books: updatedBooks,
+        error: null,
+        isLoading: false,
+        isError: false,
+      }))
     } catch (error) {
+      setState((currentState) => ({
+        books: [...currentState.books],
+        error: error as Error,
+        isLoading: false,
+        isError: true,
+      }))
       console.error(error)
     }
   }
+
+  useEffect(() => {
+    if (!isAuthenticated) return
+    try {
+      getAllBooks()
+    } catch (error) {
+      console.error(error)
+    }
+  }, [isAuthenticated])
 
   return (
     <BookContext.Provider
       value={{
-        books,
         getAllBooks,
         deleteBook,
         saveBook,
         updateBook,
+        ...state,
       }}
     >
       {children}

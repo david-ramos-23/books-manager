@@ -1,4 +1,9 @@
-import { login, logout, signUp as signUpRequest } from '@/services/auth'
+import {
+  getLoggedInUser,
+  login,
+  logout,
+  signUp as signUpRequest,
+} from '@/services/auth'
 import { SignInFormValuesType, SignUpFormValuesType } from '@/types'
 import {
   ReactNode,
@@ -8,6 +13,8 @@ import {
   useState,
 } from 'react'
 import { UserType } from '../../../src/models/user'
+import { useNavigate } from 'react-router-dom'
+import { ROUTES } from '@/routes/types'
 
 interface AuthContextInterface {
   user: UserType | undefined
@@ -33,7 +40,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<UserType>()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [errors, setErrors] = useState([])
-  const [loading] = useState(true)
+  const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
 
   // clear errors after 5 seconds
   useEffect(() => {
@@ -73,10 +81,28 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       await logout()
       setUser(undefined)
       setIsAuthenticated(false)
+      navigate(ROUTES.SignIn)
     } catch (error) {
       console.error(error)
     }
   }
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      try {
+        const res = await getLoggedInUser()
+        if (res === undefined) return setIsAuthenticated(false)
+        setIsAuthenticated(true)
+        setUser(res)
+        setLoading(false)
+        navigate(ROUTES.Books)
+      } catch (error) {
+        setIsAuthenticated(false)
+        setLoading(false)
+      }
+    }
+    void checkLogin()
+  }, [])
 
   return (
     <AuthContext.Provider
