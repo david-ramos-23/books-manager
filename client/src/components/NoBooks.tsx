@@ -1,13 +1,18 @@
 import { Link } from 'react-router-dom'
 
 export const NoBooks = () => (
-  <>
-    <p>You don't have 📚 saved.</p>
-    <p className='flex justify-between gap-x-2 text-sm'>
+  <div className='flex flex-col gap-3 py-16 text-xl'>
+    <p>
+      You don't have <span className='text-2xl'>📚</span> saved.
+    </p>
+    <p className='flex gap-2'>
       Start adding one
-      <Link to='/add' className='text-sky-500'>
+      <Link
+        to='/add'
+        className='transition-color text-sky-500 duration-500 hover:text-sky-700'
+      >
         here!
       </Link>
     </p>
-  </>
+  </div>
 )

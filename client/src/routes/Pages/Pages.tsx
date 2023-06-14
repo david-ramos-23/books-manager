@@ -1,12 +1,13 @@
 import { Navigate, Outlet, Route, Routes } from 'react-router-dom'
 import { protectedRoutes, routes } from '..'
 import { useAuth } from '@/context'
+import { Spinner } from '@/components'
 
 export const ProtectedRoute = () => {
-  const { isAuthenticated, loading } = useAuth()
+  const { isAuthenticated, isLoading } = useAuth()
 
-  if (loading) return <h1>Loading...</h1>
-  if (!isAuthenticated && !loading) return <Navigate to='/signin' replace />
+  if (isLoading) return <Spinner />
+  if (!isAuthenticated && !isLoading) return <Navigate to='/signin' replace />
   return <Outlet />
 }
 
