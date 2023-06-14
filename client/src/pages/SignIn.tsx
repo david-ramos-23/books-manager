@@ -10,6 +10,7 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { loginSchemaForm } from '../../../src/schemas/auth'
+import { toast } from 'sonner'
 
 export function SignIn() {
   const {
@@ -19,7 +20,7 @@ export function SignIn() {
   } = useForm<SignInFormValuesType>({
     resolver: zodResolver(loginSchemaForm),
   })
-  const { signIn, error: loginError, isAuthenticated } = useAuth()
+  const { signIn, error: loginError, isAuthenticated, isError } = useAuth()
   const navigate = useNavigate()
 
   const onSubmit = (data: SignInFormValuesType) => signIn(data)
@@ -30,14 +31,10 @@ export function SignIn() {
     }
   }, [isAuthenticated, navigate])
 
+  if (isError) toast.error(loginError?.message)
+
   return (
     <CardForm>
-      {loginError != null && (
-        <Message
-          message={loginError.message}
-          className='mb-1 rounded-sm bg-red-500 px-3 py-2 text-sm text-slate-200'
-        />
-      )}
       <h2 className='mg-5 text-xl font-bold'>Login</h2>
       <form className='flex w-full flex-col' onSubmit={handleSubmit(onSubmit)}>
         <div className='py-2'>

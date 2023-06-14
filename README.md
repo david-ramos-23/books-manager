@@ -12,32 +12,32 @@ Rename **_.env.example_** to **_.env_**
 You will need to install the dependencies required for both apps (server & client) I use [pnpm](https://github.com/pnpm/pnpm) as a package manager but feel free to use npm or yarn or whatever you like the most. 
 
 1. Install server dependencies
-    ```bash
-    npm install
-    # or
-    yarn install
-    # or
-    pnpm install
-    ```
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
 2. Install cliente dependencies
-    ```bash
-    npm install --prefix client
-    # or
-    yarn --cwd client install
-    # or
-    pnpm --filter client install 
-    ```
+```bash
+npm install --prefix client
+# or
+yarn --cwd client install
+# or
+pnpm --filter client install 
+```
 
 3. Start server application
-    ```bash
-    pnpm dev
-    ```
+```bash
+pnpm dev
+```
 
 
 4. Start server application
-    ```bash
-    pnpm --filter client dev 
-    ```
+```bash
+pnpm --filter client dev 
+```
 
 ## 🛠️ Tests
 
