@@ -9,9 +9,9 @@ import { AuthProvider, BookProvider } from './context'
 export function App(): ReactElement {
   return (
     <>
-      <AuthProvider>
-        <BookProvider>
-          <BrowserRouter>
+      <BrowserRouter>
+        <AuthProvider>
+          <BookProvider>
             <Nav />
             <main className='relative mx-auto flex max-w-7xl flex-col items-center justify-center pb-32'>
               <section className='flex w-full flex-col items-center justify-center'>
@@ -30,9 +30,9 @@ export function App(): ReactElement {
               </section>
             </main>
             <main />
-          </BrowserRouter>
-        </BookProvider>
-      </AuthProvider>
+          </BookProvider>
+        </AuthProvider>
+      </BrowserRouter>
     </>
   )
 }

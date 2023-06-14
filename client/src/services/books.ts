@@ -2,8 +2,11 @@ import type { BookType } from '../../../src/models/book'
 import { fetchData } from './utils'
 
 export async function getBooks(): Promise<BookType[]> {
-  const response = await fetchData('/api/books', { method: 'GET' })
-  return response.json()
+  return await fetchData('/api/books', { method: 'GET' })
+}
+
+export async function getBook(bookId: string): Promise<BookType> {
+  return await fetchData(`/api/books/${bookId}}`, { method: 'GET' })
 }
 
 interface SaveBookRequest {
@@ -19,33 +22,31 @@ export async function saveBook({
   image,
   title,
 }: SaveBookRequest): Promise<BookType> {
-  const response = await fetchData('/api/books', {
+  return await fetchData('/api/books', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ author, description, image, title }),
   })
-  return response.json()
 }
 
 interface UpdateBookRequest {
   bookId: string
-  book: BookType
+  book: SaveBookRequest
 }
 
 export async function updateBook({
   bookId,
   book,
-}: UpdateBookRequest): Promise<BookType> {
-  const response = await fetchData(`/api/books/${bookId}`, {
+}: UpdateBookRequest): Promise<BookType[]> {
+  return await fetchData(`/api/books/${bookId}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(book),
   })
-  return response.json()
 }
 
 export async function deleteBook(bookId: string) {

@@ -2,8 +2,7 @@ import type { UserType } from '../../../src/models/user'
 import { fetchData } from './utils'
 
 export async function getLoggedInUser(): Promise<UserType> {
-  const response = await fetchData('/api/users', { method: 'GET' })
-  return response.json()
+  return await fetchData('/api/users', { method: 'GET' })
 }
 
 export interface SignUpRequest {

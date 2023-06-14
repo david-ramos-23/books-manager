@@ -7,3 +7,10 @@ export interface SignUpFormValuesType {
   email: string
   password: string
 }
+
+export interface BookFromValuesType {
+  author: string
+  description: string
+  image: string
+  title: string
+}
