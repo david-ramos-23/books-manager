@@ -9,9 +9,9 @@ Rename **_.env.example_** to **_.env_**
 
 ## 🧑‍💻 Run Application locally
 
-You will need to install the dependencies required. I use [pnpm](https://github.com/pnpm/pnpm) as a package manager but feel free to use npm or yarn or whatever you like the most. 
+You will need to install the dependencies required for both apps (server & client) I use [pnpm](https://github.com/pnpm/pnpm) as a package manager but feel free to use npm or yarn or whatever you like the most. 
 
-1. Install dependencies
+1. Install server dependencies
     ```bash
     npm install
     # or
@@ -19,15 +19,41 @@ You will need to install the dependencies required. I use [pnpm](https://github.
     # or
     pnpm install
     ```
+2. Install cliente dependencies
+    ```bash
+    npm install --prefix client
+    # or
+    yarn --cwd client install
+    # or
+    pnpm --filter client install 
+    ```
 
-2. Start application
+3. Start server application
     ```bash
     pnpm dev
     ```
 
+
+4. Start server application
+    ```bash
+    pnpm --filter client dev 
+    ```
+
 ## 🛠️ Tests
 
-⚠️ WIP ⚠️
+I used Jest + Supertests in the server and Vitest + RTL in the client.
+
+To execute the server tests you need to run:
+
+```bash
+npm test
+# or
+yarn test
+# or
+pnpm test
+```
+
+And the ones from the client app:
 
 ```bash
 npm test
@@ -62,12 +88,12 @@ docker run --rm -p 3000:3000 --name books-manager books-manager
 - [X] Use TypeScript
 - [X] Use a Node.js framework for the backend
 - [X] Use React for the frontend
-- [ ] Add a simple sign-up option - Add a user’s JSON file where you will store the username
+- [x] Add a simple sign-up option - Add a user’s JSON file where you will store the username
 and password of the users who will use this application
-- [ ] Store the books in memory (no need to use a database in this exercise)
-- [ ] Validate user input to prevent duplicates from being added
+- [x] Store the books in memory (no need to use a database in this exercise)
+- [x] Validate user input to prevent duplicates from being added
 - [X] Load a logo for your book brand using an environment variable
-- [ ] Write at least a few unit tests for the backend and frontend
+- [x] Write at least a few unit tests for the backend and frontend
 - [X] Use a tool such as Prettier to format the code
 - [X] Package the application as a Docker container
 - [X] Deploy the application on AWS preferably (or GCP, Azure) and provide a link
