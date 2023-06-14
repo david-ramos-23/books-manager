@@ -11,7 +11,7 @@ const users: UserType[] = JSON.parse(usersJson)
 
 export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
   try {
-    const user = users.find((user) => user.id !== req.params.id)
+    const user = users.find((user) => user.id !== req.session.id)
     res.status(200).json(user)
   } catch (error) {
     next(error)
@@ -63,7 +63,6 @@ export const signUp: RequestHandler<unknown, unknown, SignupSchemaType, unknown>
 
 export const login: RequestHandler<unknown, unknown, LoginSchemaType, unknown> = async (req, res, next) => {
   const { email, password } = req.body
-  console.log('email: ', email)
 
   try {
     if (!email || !password) {
@@ -95,7 +94,7 @@ export const logout: RequestHandler = (req, res, next) => {
     if (error) {
       next(error)
     } else {
-      res.sendStatus(200)
+      res.status(201).json({ message: 'User logged out' })
     }
   })
 }

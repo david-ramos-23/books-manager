@@ -105,12 +105,12 @@ export function BookProvider({ children }: { children: ReactNode }) {
   const updateBook = async (bookId: string, book: BookFromValuesType) => {
     try {
       const updatedBooks = await updateBookRequest({ bookId, book })
-      setState((currentState) => ({
+      setState({
         books: updatedBooks,
         error: null,
         isLoading: false,
         isError: false,
-      }))
+      })
     } catch (error) {
       setState((currentState) => ({
         books: [...currentState.books],
@@ -125,7 +125,7 @@ export function BookProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!isAuthenticated) return
     try {
-      getAllBooks()
+      void getAllBooks()
     } catch (error) {
       console.error(error)
     }

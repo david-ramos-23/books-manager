@@ -28,7 +28,7 @@ export function SignIn() {
     if (isAuthenticated) {
       navigate(ROUTES.Books)
     }
-  }, [isAuthenticated])
+  }, [isAuthenticated, navigate])
 
   return (
     <CardForm>

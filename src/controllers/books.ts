@@ -132,7 +132,7 @@ export const deleteBook: RequestHandler = async (req, res, next) => {
 
     books = books.filter((book) => book.id !== req.params.id)
 
-    res.sendStatus(204)
+    res.status(200).json({ message: 'Book deleted' })
   } catch (error) {
     next(error)
   }

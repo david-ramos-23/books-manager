@@ -12,7 +12,7 @@ export const schemaValidator =
         })
         next()
       } catch (error) {
-        console.log(error)
+        console.error(error)
         if (error instanceof ZodError) {
           return res.status(400).json(
             error.issues.map((issue) => ({

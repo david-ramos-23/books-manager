@@ -102,6 +102,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
     }
     void checkLogin()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

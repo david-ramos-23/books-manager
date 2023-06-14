@@ -18,7 +18,7 @@ export function BookCard({ book }: { book: BookType }) {
         <p className='my-5 w-[inherit] break-words'>{book.description}</p>
       </Link>
       <div className='flex items-center'>
-        <Button onClick={(e) => deleteBook(book.id)}>
+        <Button onClick={() => deleteBook(book.id)}>
           <IconTrash />
         </Button>
       </div>
