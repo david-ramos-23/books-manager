@@ -2,15 +2,6 @@ import { render } from '@testing-library/react'
 import type { PropsWithChildren, ReactElement } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 
-const queryClient = new QueryClient({
-	defaultOptions: {
-		queries: {
-			retry: false,
-			cacheTime: 0
-		}
-	}
-})
-
 export const DESKTOP_RESOLUTION_WIDTH = 1280
 export const DESKTOP_RESOLUTION_HEIGHT = 800
 

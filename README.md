@@ -73,6 +73,12 @@ pnpm test
 - Commitlint (Conventional Commits)
 - Dockerized App 🎁
 
+## 🤔 Improvements
+- Persistance DB Layer
+- Data Structures like HashMap
+- e2e Tests
+- Convert to Monorepo style
+
 ## ⚙️ Build Dockerized App 🎁
 
 In order Build the image and fire up the container run the following commands at the root folder.
