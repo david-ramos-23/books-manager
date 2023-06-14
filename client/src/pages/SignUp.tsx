@@ -19,7 +19,7 @@ export function SignUp() {
   } = useForm<SignUpFormValuesType>({
     resolver: zodResolver(signUpSchemaForm),
   })
-  const { signUp, errors: loginErrors, isAuthenticated } = useAuth()
+  const { signUp, error: loginError, isAuthenticated } = useAuth()
   const navigate = useNavigate()
 
   const onSubmit = async (data: SignUpFormValuesType) => signUp(data)
@@ -32,13 +32,12 @@ export function SignUp() {
 
   return (
     <CardForm>
-      {loginErrors.map((error, i) => (
+      {loginError != null && (
         <Message
-          message={error}
-          key={i}
+          message={loginError.message}
           className='mb-1 rounded-sm bg-red-500 px-3 py-2 text-sm text-slate-200'
         />
-      ))}
+      )}
       <h2 className='mg-5 text-xl font-bold'>Sign Up Page</h2>
 
       <form className='flex w-full flex-col' onSubmit={handleSubmit(onSubmit)}>
@@ -55,7 +54,7 @@ export function SignUp() {
           {errors?.username?.message != null && (
             <Message
               message={errors?.username?.message}
-              className='mt-1 rounded-[3px] bg-red-200  p-1 text-xs text-red-400'
+              className='text-xs italic text-red-500'
             />
           )}
         </div>
@@ -72,7 +71,7 @@ export function SignUp() {
           {errors?.email?.message != null && (
             <Message
               message={errors?.email?.message}
-              className='mt-1 rounded-[3px] bg-red-200  p-1 text-xs text-red-400'
+              className='text-xs italic text-red-500'
             />
           )}
         </div>
@@ -87,7 +86,7 @@ export function SignUp() {
           {errors?.password?.message != null && (
             <Message
               message={errors?.password?.message}
-              className='mt-1 rounded-[3px] bg-red-200  p-1 text-xs text-red-400'
+              className='text-xs italic text-red-500'
             />
           )}
         </div>

@@ -55,6 +55,7 @@ export function BookForm(): ReactElement {
             className='w-full flex-1 rounded-[3px] border-[1px] border-slate-300 p-2 px-3 text-sm outline-0 transition duration-200 hover:border-[1px] hover:border-black'
             {...register('title')}
             autoFocus
+            required
           />
           {errors?.title?.message != null && (
             <Message
@@ -69,6 +70,7 @@ export function BookForm(): ReactElement {
             type='text'
             placeholder='Author'
             className='w-full flex-1 rounded-[3px] border-[1px] border-slate-300 p-2 px-3 text-sm outline-0 transition duration-200 hover:border-[1px] hover:border-black'
+            required
             {...register('author')}
           />
           {errors?.author?.message != null && (
@@ -81,8 +83,8 @@ export function BookForm(): ReactElement {
         <div className='py-2'>
           <Label htmlFor='image'>Image</Label>
           <input
-            type='text'
-            placeholder='Image'
+            type='url'
+            placeholder='Url of an image'
             className='w-full flex-1 rounded-[3px] border-[1px] border-slate-300 p-2 px-3 text-sm outline-0 transition duration-200 hover:border-[1px] hover:border-black'
             {...register('image')}
           />
@@ -100,6 +102,7 @@ export function BookForm(): ReactElement {
             rows={3}
             className='w-full flex-1 rounded-[3px] border-[1px] border-slate-300 p-2 px-3 text-sm outline-0 transition duration-200 hover:border-[1px] hover:border-black'
             placeholder='Description'
+            required
             {...register('description')}
           />
           {errors?.description?.message != null && (

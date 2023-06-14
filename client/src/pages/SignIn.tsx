@@ -19,7 +19,7 @@ export function SignIn() {
   } = useForm<SignInFormValuesType>({
     resolver: zodResolver(loginSchemaForm),
   })
-  const { signIn, errors: loginErrors, isAuthenticated } = useAuth()
+  const { signIn, error: loginError, isAuthenticated } = useAuth()
   const navigate = useNavigate()
 
   const onSubmit = (data: SignInFormValuesType) => signIn(data)
@@ -32,13 +32,12 @@ export function SignIn() {
 
   return (
     <CardForm>
-      {loginErrors.map((error, i) => (
+      {loginError != null && (
         <Message
-          message={error}
-          key={i}
+          message={loginError.message}
           className='mb-1 rounded-sm bg-red-500 px-3 py-2 text-sm text-slate-200'
         />
-      ))}
+      )}
       <h2 className='mg-5 text-xl font-bold'>Login</h2>
       <form className='flex w-full flex-col' onSubmit={handleSubmit(onSubmit)}>
         <div className='py-2'>
