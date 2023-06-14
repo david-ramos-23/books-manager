@@ -1,0 +1,27 @@
+import { useBooks } from '@/context/books'
+import { Button } from './Button'
+import { BookType } from '../../../src/models/book'
+import { Card } from './Card'
+import { Link } from 'react-router-dom'
+import { IconTrash } from '@tabler/icons-react'
+
+export function BookCard({ book }: { book: BookType }) {
+  const { deleteBook } = useBooks()
+
+  return (
+    <Card>
+      <Link to={`/edit/${book.id}`} className=''>
+        <header className='flex justify-between'>
+          <h1 className='text-2xl font-bold'>{book.title}</h1>
+        </header>
+        <p className='text-slate-400'>{book.author}</p>
+        <p className='my-5 w-[inherit] break-words'>{book.description}</p>
+      </Link>
+      <div className='flex items-center'>
+        <Button onClick={(e) => deleteBook(book.id)}>
+          <IconTrash />
+        </Button>
+      </div>
+    </Card>
+  )
+}

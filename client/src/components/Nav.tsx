@@ -1,6 +1,9 @@
+import { useAuth } from '@/context'
 import { Link } from 'react-router-dom'
+import { Button } from './Button'
 
 export const Nav = () => {
+  const { signOut, isAuthenticated } = useAuth()
   const imgUrl = import.meta.env.VITE_LOGO_URL ?? 'cardohealth.webp'
 
   return (
@@ -17,17 +20,32 @@ export const Nav = () => {
         </Link>
         <div className='flex gap-5 '>
           <Link
-            to='/book'
+            to='/books'
+            className='text-[#FAEEE4] transition-colors duration-500 hover:text-[#d7ab6e]'
+          >
+            Books
+          </Link>
+          <Link
+            to='/add'
             className='text-[#FAEEE4] transition-colors duration-500 hover:text-[#d7ab6e]'
           >
             Add Book
           </Link>
-          <Link
-            to='/signin'
-            className='text-[#FAEEE4] transition-colors duration-500 hover:text-[#d7ab6e]'
-          >
-            Sign in
-          </Link>
+          {!isAuthenticated ? (
+            <Link
+              to='/signin'
+              className='text-[#FAEEE4] transition-colors duration-500 hover:text-[#d7ab6e]'
+            >
+              Sign in
+            </Link>
+          ) : (
+            <Button
+              onClick={signOut}
+              className='text-[#FAEEE4] transition-colors duration-500 hover:text-[#d7ab6e]'
+            >
+              Sign out
+            </Button>
+          )}
         </div>
       </nav>
     </header>

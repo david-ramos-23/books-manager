@@ -6,7 +6,7 @@ export function Label({
   children: React.ReactNode
 }) {
   return (
-    <label htmlFor={htmlFor} className='my-1 block text-xs text-slate-400'>
+    <label htmlFor={htmlFor} className='my-1 hidden text-xs text-slate-400'>
       {children}
     </label>
   )
