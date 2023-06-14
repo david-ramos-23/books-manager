@@ -64,6 +64,12 @@ export const saveBook: RequestHandler<unknown, unknown, SaveBookBody, unknown> =
       throw createHttpError(400, 'Book must have a title')
     }
 
+    const existingBookTitle = books.find((book) => book.title === title)
+
+    if (existingBookTitle) {
+      throw createHttpError(409, `The book ${title} is already saved. Please choose a different title or update the existing book.`)
+    }
+
     const newBook: BookType = {
       id: v4(),
       author,
@@ -130,8 +136,9 @@ export const deleteBook: RequestHandler = async (req, res, next) => {
       throw createHttpError(401, 'You cannot access this Book')
     }
 
-    books = books.filter((book) => book.id !== req.params.id)
+    const filteredBooks = books.filter((book) => book.id !== req.params.id)
 
+    books = filteredBooks
     res.status(200).json({ message: 'Book deleted' })
   } catch (error) {
     next(error)
