@@ -1,10 +1,11 @@
 import type { ReactElement } from 'react'
 import { Suspense } from 'react'
 import { BrowserRouter } from 'react-router-dom'
+import { Toaster } from 'sonner'
 import { LoadingOrError } from './components/LoadingOrError'
-import { Pages } from './routes/Pages/Pages'
 import { Nav } from './components/Nav'
 import { AuthProvider, BookProvider } from './context'
+import { Pages } from './routes/Pages/Pages'
 
 export function App(): ReactElement {
   return (
@@ -12,6 +13,7 @@ export function App(): ReactElement {
       <BrowserRouter>
         <AuthProvider>
           <BookProvider>
+            <Toaster richColors />
             <Nav />
             <main className='relative mx-auto flex max-w-7xl flex-col items-center justify-center pb-32'>
               <section className='flex w-full flex-col items-center justify-center'>
